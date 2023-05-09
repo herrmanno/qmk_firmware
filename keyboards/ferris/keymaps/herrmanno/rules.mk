@@ -1,0 +1,5 @@
+BOOTMAGIC_ENABLE = yes      # Enable Bootmagic Lite
+COMBO_ENABLE = yes
+UNICODE_ENABLE = no
+UNICODEMAP_ENABLE = no
+UCIS_ENABLE = no
