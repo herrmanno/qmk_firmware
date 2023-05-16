@@ -26,7 +26,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define IGNORE_MOD_TAP_INTERRUPT
 #define PERMISSIVE_HOLD
-// #define HOLD_ON_OTHER_KEY_PRESS
+#define HOLD_ON_OTHER_KEY_PRESS
+// #define BILATERAL_COMBINATIONS
 // #define QUICK_TAP_TERM 120
 #define ONESHOT_TIMEOUT 2000
 #define ONESHOT_TAP_TOGGLE 2
