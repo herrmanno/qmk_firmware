@@ -14,6 +14,7 @@ enum custom_keycodes {
     O_UMLT,
     U_UMLT,
     SS_UMLT,
+    TMUX,
 };
 
 // One shot modifiers used on all upper layers
@@ -25,6 +26,7 @@ enum custom_keycodes {
 // Mod tap shift keys used on base layer
 #define T_SFT_Z LSFT_T(KC_Z)
 #define T_SFT_SLH LSFT_T(KC_SLSH)
+#define T_CTL_BSPC LCTL_T(KC_BSPC)
 
 //*********************************************************
 //          KEYMAP
@@ -32,28 +34,28 @@ enum custom_keycodes {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_BASE] = LAYOUT(
-    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,            KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN,
+    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,            KC_J,    KC_L,    KC_U,    KC_Y,    KC_QUOT,
     KC_A,    KC_R,    KC_S,    KC_T,    KC_G,            KC_M,    KC_N,    KC_E,    KC_I,    KC_O,
     T_SFT_Z, KC_X,    KC_C,    KC_D,    KC_V,            KC_K,    KC_H,    KC_COMM, KC_DOT,  T_SFT_SLH,
-                                      MO(1), KC_SPC, KC_BSPC, MO(2)
+                                      MO(1), KC_SPC, T_CTL_BSPC, MO(2)
   ),
 
   [_NUM] = LAYOUT(
     KC_1,    KC_2,    KC_3,    KC_4,    KC_5,            KC_6,    KC_7,    KC_8,    KC_9,    KC_0,
     M_SHFT,  M_ALT,   M_CTRL,  M_GUI,   KC_GRV,          KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, KC_ESC,
-    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,         KC_TRNS, KC_ENT,  KC_TAB,  KC_DEL, KC_LSFT,
+    KC_LSFT, A_UMLT,  U_UMLT,  O_UMLT,  SS_UMLT,         KC_TRNS, KC_ENT,  KC_TAB,  KC_DEL,  KC_LSFT,
                                     KC_TRNS, KC_TRNS, DELWORD, MO(3)
   ),
 
   [_SYM] = LAYOUT(
-    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,         KC_TRNS, A_UMLT,  U_UMLT,  O_UMLT,  SS_UMLT,
-    M_SHFT,  M_ALT,   M_CTRL,  M_GUI,   KC_BSLS,         KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC, KC_QUOT,
-    KC_LSFT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,         KC_UNDS, KC_PLUS, KC_TRNS, KC_TRNS, KC_TRNS,
+    KC_EXLM, KC_QUES, KC_LPRN, KC_RPRN, KC_ASTR,         KC_TRNS, A_UMLT,  U_UMLT,  O_UMLT,  SS_UMLT,
+    M_SHFT,  M_ALT,   M_CTRL,  M_GUI,   KC_BSLS,         KC_MINS, KC_EQL,  KC_LCBR, KC_RCBR, KC_SCLN,
+    KC_LSFT, KC_TRNS, KC_TRNS, TMUX,    KC_TRNS,         KC_UNDS, KC_PLUS, KC_LBRC, KC_RBRC, KC_LSFT,
                                     MO(3), KC_TRNS, KC_TRNS, KC_TRNS
   ),
 
   [_NAV] = LAYOUT(
-    KC_TRNS, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE,         KC_TRNS, KC_F9,   KC_F10,  KC_F11,  KC_F12,
+    KC_TRNS, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE,         QK_BOOT, KC_F9,   KC_F10,  KC_F11,  KC_F12,
     M_SHFT,  M_ALT,   M_CTRL,  M_GUI,   KC_VOLU,         KC_BRIU, KC_F5,   KC_F6,   KC_F7,   KC_F8,
     KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_VOLD,         KC_BRID, KC_F1,   KC_F2,   KC_F3,   KC_F4,
                                     KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
@@ -142,6 +144,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             register_code(KC_LALT);
             tap_code(KC_S);
             unregister_code(KC_LALT);
+
+            set_mods(mods);
+            set_oneshot_mods(oneshot_mods);
+        }
+        break;
+    case TMUX:
+        if (record->event.pressed) {
+            uint8_t mods = get_mods();
+            uint8_t oneshot_mods = get_oneshot_mods();
+
+            clear_mods();
+            clear_oneshot_mods();
+
+            register_code(KC_LCTL);
+            tap_code(KC_A);
+            unregister_code(KC_LCTL);
 
             set_mods(mods);
             set_oneshot_mods(oneshot_mods);
