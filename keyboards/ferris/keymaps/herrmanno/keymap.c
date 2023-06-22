@@ -15,6 +15,7 @@ enum custom_keycodes {
     U_UMLT,
     SS_UMLT,
     TMUX,
+    CLR_MOD,
 };
 
 // One shot modifiers used on all upper layers
@@ -26,6 +27,7 @@ enum custom_keycodes {
 // Mod tap shift keys used on base layer
 #define T_SFT_Z LSFT_T(KC_Z)
 #define T_SFT_SLH LSFT_T(KC_SLSH)
+#define T_GUI_SPC LGUI_T(KC_SPC)
 #define T_CTL_BSPC LCTL_T(KC_BSPC)
 
 //*********************************************************
@@ -37,7 +39,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,            KC_J,    KC_L,    KC_U,    KC_Y,    KC_QUOT,
     KC_A,    KC_R,    KC_S,    KC_T,    KC_G,            KC_M,    KC_N,    KC_E,    KC_I,    KC_O,
     T_SFT_Z, KC_X,    KC_C,    KC_D,    KC_V,            KC_K,    KC_H,    KC_COMM, KC_DOT,  T_SFT_SLH,
-                                      MO(1), KC_SPC, T_CTL_BSPC, MO(2)
+                                   MO(1), T_GUI_SPC, T_CTL_BSPC, MO(2)
   ),
 
   [_NUM] = LAYOUT(
@@ -57,7 +59,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_NAV] = LAYOUT(
     KC_TRNS, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE,         QK_BOOT, KC_F9,   KC_F10,  KC_F11,  KC_F12,
     M_SHFT,  M_ALT,   M_CTRL,  M_GUI,   KC_VOLU,         KC_BRIU, KC_F5,   KC_F6,   KC_F7,   KC_F8,
-    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_VOLD,         KC_BRID, KC_F1,   KC_F2,   KC_F3,   KC_F4,
+    KC_TRNS, KC_TRNS, CLR_MOD, KC_TRNS, KC_VOLD,         KC_BRID, KC_F1,   KC_F2,   KC_F3,   KC_F4,
                                     KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
   )
 };
@@ -165,9 +167,31 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             set_oneshot_mods(oneshot_mods);
         }
         break;
+    case CLR_MOD:
+        if (record->event.pressed) {
+            clear_mods();
+            clear_oneshot_mods();
+            return false;
+        }
+        break;
     }
     return true;
 };
+
+//*********************************************************
+//          CUSTOM HOLD ON KEY PRESS
+//*********************************************************
+
+bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case T_GUI_SPC:
+            return false;
+        case T_CTL_BSPC:
+            return false;
+        default:
+            return true;
+    }
+}
 
 //*********************************************************
 //          CUSTOM TAPPING TERM
