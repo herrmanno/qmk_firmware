@@ -32,3 +32,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define ONESHOT_TAP_TOGGLE 2
 // #define TAP_CODE_DELAY 100
 
+// increace debounce timeout to 30 ms
+#define DEBOUNCE 30
