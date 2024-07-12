@@ -34,6 +34,7 @@ enum custom_keycodes {
 #define T_GUI_SPC LGUI_T(KC_SPC)
 #define T_CTL_BSPC LCTL_T(KC_BSPC)
 
+
 //*********************************************************
 //          KEYMAP
 //*********************************************************
@@ -55,8 +56,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_SYM] = LAYOUT(
     KC_EXLM, KC_QUES, KC_LPRN, KC_RPRN, KC_ASTR,         KC_TRNS, A_UMLT,  U_UMLT,  O_UMLT,  SS_UMLT,
-    M_SHFT,  M_ALT,   M_CTRL,  M_GUI,   KC_BSLS,         KC_MINS, KC_EQL,  KC_LCBR, KC_RCBR, KC_SCLN,
-    KC_LSFT, KC_TRNS, SPTL,    TMUX,    KC_TRNS,         KC_UNDS, KC_PLUS, KC_LBRC, KC_RBRC, KC_LSFT,
+    M_SHFT,  M_ALT,   M_CTRL,  M_GUI,   KC_BSLS,         KC_TRNS, KC_EQL,  KC_LCBR, KC_RCBR, KC_SCLN,
+    KC_LSFT, KC_TRNS, SPTL,    TMUX,    KC_TRNS,         KC_UNDS, KC_MINS, KC_LBRC, KC_RBRC, KC_LSFT,
                                     MO(3), KC_TRNS, KC_TRNS, KC_TRNS
   ),
 
